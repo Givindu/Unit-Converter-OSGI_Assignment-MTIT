@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: DataConverter_Subscriber
+Bundle-SymbolicName: DataConverter_Subscriber
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: dataconverter_subscriber.Activator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Automatic-Module-Name: DataConverter_Subscriber
+Import-Package: com.mtit.osgi.globalconvertor,
+ org.osgi.framework;version="1.3.0"
+Bundle-ActivationPolicy: lazy
+Export-Package: dataconverter_subscriber

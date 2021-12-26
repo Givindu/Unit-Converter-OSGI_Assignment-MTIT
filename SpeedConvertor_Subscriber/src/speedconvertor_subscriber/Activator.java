@@ -1,0 +1,74 @@
+package speedconvertor_subscriber;
+
+import com.mtit.osgi.globalconvertor.ServicePublish;
+
+import java.util.Scanner;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+
+public class Activator implements BundleActivator {
+
+	ServiceReference serviceReference;
+	/*
+	 * (non-Javadoc)
+	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	 */
+	public void start(BundleContext bundleContext) throws Exception {
+		System.out.println("Start speed convertor subscriber");
+		serviceReference = bundleContext.getServiceReference(ServicePublish.class.getName());
+		ServicePublish servicePublish = (ServicePublish) bundleContext.getService(serviceReference);
+		System.out.println(servicePublish.publishService());
+		
+		Scanner scan = new Scanner(System.in);
+
+		System.out.println("Select one option");
+		System.out.println("Convert Kilometers per hours to Miles per hours : Enter 1");
+		System.out.println("Convert Miles per hours to Kilometers per hours : Enter 2");
+
+		int number = scan.nextInt();
+
+		if (number == 1) {
+			System.out.println("Speed in kph : ");
+			float value1 = scan.nextFloat();
+			System.out.println(value1+" Kilometers into Miles is: "+servicePublish.convertSpeedKMtoMiles(value1));
+			
+			System.out.println("Do you want to continue [y/n]?");
+			
+			String answer = scan.next();
+			if(answer.equals("n") || answer.equals("N")) {
+				System.out.println("Good bye!!!");
+			} if(answer.equals("y") || answer.equals("Y")) {
+				start(bundleContext);
+			} else {
+				System.out.println("Please press 'n' or 'y'");
+			}
+		} else {
+			System.out.println("Speed in mph : ");
+			float value2 = scan.nextFloat();
+			System.out.println(value2+" Miles into Kilometers is: "+servicePublish.convertSpeedMilestoKM(value2));
+			
+			System.out.println("Do you want to continue [y/n]?");
+			
+			String answer = scan.next();
+			if(answer.equals("n") || answer.equals("N")) {
+				System.out.println("Good bye!!!");
+			} if(answer.equals("y") || answer.equals("Y")) {
+				start(bundleContext);
+			} else {
+				System.out.println("Please press 'n' or 'y'");
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 */
+	public void stop(BundleContext bundleContext) throws Exception {
+		System.out.println("Good bye!!!");
+		bundleContext.ungetService(serviceReference);
+	}
+
+}
